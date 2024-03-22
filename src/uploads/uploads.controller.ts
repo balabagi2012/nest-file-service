@@ -39,15 +39,11 @@ export class UploadsController {
     }),
   )
   uploadFile(@UploadedFile() file: Express.Multer.File) {
-    const hostName = this.configService.get<string>('HOST_NAME');
-    return {
-      message: 'File uploaded successfully!',
-      file: `${hostName}/${file.path}`,
-    };
+    return this.uploadsService.uploadFile(file.filename);
   }
 
-  @Delete()
-  deleleFile(): string {
-    return;
+  @Delete(':imgPath')
+  deleleFile(@Param('imgPath') imgPath) {
+    return this.uploadsService.deleteFile(imgPath);
   }
 }
