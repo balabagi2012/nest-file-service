@@ -8,13 +8,17 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { UploadsService } from './uploads.service';
 
 @Controller('uploads')
 export class UploadsController {
-  constructor(private readonly uploadsService: UploadsService) {}
+  constructor(
+    private readonly uploadsService: UploadsService,
+    private configService: ConfigService,
+  ) {}
 
   @Get(':imgPath')
   getFile(@Param('imgPath') imgPath, @Res() res): string {
@@ -35,7 +39,11 @@ export class UploadsController {
     }),
   )
   uploadFile(@UploadedFile() file: Express.Multer.File) {
-    return { message: 'File uploaded successfully!', file: `/${file.path}` };
+    const hostName = this.configService.get<string>('HOST_NAME');
+    return {
+      message: 'File uploaded successfully!',
+      file: `${hostName}/${file.path}`,
+    };
   }
 
   @Delete()
