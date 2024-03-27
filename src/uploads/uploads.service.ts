@@ -26,12 +26,12 @@ export class UploadsService {
       await unlink(filePath);
       return {
         message: 'File deleted successfully!',
-        file: `${hostName}/${imgPath}`,
+        file: `${hostName}/uploads/${imgPath}`,
       };
     } catch (error) {
       return {
         message: error.message,
-        file: `${hostName}/${imgPath}`,
+        file: `${hostName}/uploads/${imgPath}`,
       };
     }
   }
