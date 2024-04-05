@@ -12,7 +12,7 @@ export class UploadsService {
     const hostName = this.configService.get<string>('HOST_NAME');
     return {
       message: 'File uploaded successfully!',
-      file: `${hostName}/${filePath}`,
+      file: `${hostName}/uploads/${filePath}`,
     };
   }
 
